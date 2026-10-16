@@ -1,0 +1,3 @@
+parts/* -text -diff -filter
+*.cmd -text
+*.ps1 -text

@@ -1,0 +1,20 @@
+{
+  "result": "PASS",
+  "original_zip_sha256": "83c8a966c599b86060fb3130bb5aa68ce8c2edad2dd77aeded061f607ca2b994",
+  "original_zip_bytes": 227888945,
+  "verified_extracted_files": 569,
+  "assembler_environment": "Linux, PowerShell 7.5.4",
+  "windows_native_execution": "not performed",
+  "negative_tests": [
+    {
+      "case": "bad checksum",
+      "result": "PASS",
+      "exit_code": 1
+    },
+    {
+      "case": "existing temporary",
+      "result": "PASS",
+      "exit_code": 1
+    }
+  ]
+}

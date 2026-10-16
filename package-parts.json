@@ -1,0 +1,32 @@
+{
+  "package": "mcc2-console-0.2.0-windows-server-2019-x64-complete-lock-service.zip",
+  "size": 227888945,
+  "sha256": "83c8a966c599b86060fb3130bb5aa68ce8c2edad2dd77aeded061f607ca2b994",
+  "parts": [
+    {
+      "name": "complete-package.part01",
+      "size": 50331648,
+      "sha256": "e7bd7a7dbee54425badd44aa04c7ec5a86eb204f53e7a125ec98b4f7c271f2fd"
+    },
+    {
+      "name": "complete-package.part02",
+      "size": 50331648,
+      "sha256": "998b0709eecf48ed8a464743a64211a81f256fe5b1e7551506d616ee33a7a94c"
+    },
+    {
+      "name": "complete-package.part03",
+      "size": 50331648,
+      "sha256": "a4d6850c5a6d90676e67f7801b77e487e2c43d7943ff1552a72a91c874ea09ae"
+    },
+    {
+      "name": "complete-package.part04",
+      "size": 50331648,
+      "sha256": "72d29ed4ec1f5ccef570484fd7fd6bd1f8be9b405ceb5bfd8252b5b9c97d4f3a"
+    },
+    {
+      "name": "complete-package.part05",
+      "size": 26562353,
+      "sha256": "1fd08afd8c8340cb526b33b0eb64be97b705a7b34dd23fba78c4c707eb952c3f"
+    }
+  ]
+}
