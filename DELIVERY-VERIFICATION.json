@@ -1,20 +1,47 @@
 {
   "result": "PASS",
+  "delivery_revision": "extraction-repair-20261016.1",
   "original_zip_sha256": "83c8a966c599b86060fb3130bb5aa68ce8c2edad2dd77aeded061f607ca2b994",
   "original_zip_bytes": 227888945,
-  "verified_extracted_files": 569,
-  "assembler_environment": "Linux, PowerShell 7.5.4",
-  "windows_native_execution": "not performed",
-  "negative_tests": [
+  "base_delivery_commit": "318d1ac913f994f48e3fdf909027c4fe1221d11e",
+  "verified_extracted_files_per_positive_scenario": 569,
+  "verification_environment": "Linux, PowerShell 7.5.4; Windows PowerShell 5.1 syntax and .NET Framework API compatibility targeted",
+  "windows_native_execution": "not performed; awaiting user retry",
+  "reported_windows_longest_output_path_chars": 310,
+  "repair_output_path_limit_chars": 240,
+  "legacy_archive_module": "not used; Expand-Archive was overridden to fail in functional test harness",
+  "tests": [
     {
-      "case": "bad checksum",
+      "scenario": "parts-only",
       "result": "PASS",
-      "exit_code": 1
+      "verified_files": 569
     },
     {
-      "case": "existing temporary",
+      "scenario": "reuse-zip",
       "result": "PASS",
-      "exit_code": 1
+      "verified_files": 569
+    },
+    {
+      "scenario": "bad-parts",
+      "result": "PASS",
+      "failure_message": "checksum mismatch"
+    },
+    {
+      "scenario": "bad-zip",
+      "result": "PASS",
+      "failure_message": "wrong size"
+    },
+    {
+      "scenario": "existing-output",
+      "result": "PASS",
+      "failure_message": "Destination already exists"
+    },
+    {
+      "scenario": "long-output",
+      "result": "PASS",
+      "failure_message": "Destination path is too long"
     }
-  ]
+  ],
+  "patch_zip_sha256": "102ebf38a4e478383b03f152e42f497ef041445abf727444dc53172852f5013b",
+  "patch_zip_bytes": 4780
 }

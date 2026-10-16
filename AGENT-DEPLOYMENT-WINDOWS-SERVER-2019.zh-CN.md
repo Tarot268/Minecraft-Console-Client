@@ -2,6 +2,8 @@
 
 版本：部署修订 `0.2.0-ws2019.2-lock-service`，生成日期 2026-10-16。此文件是本 Windows 完整包的部署入口，可独立交给另一位 Agent 执行。
 
+GitHub 交付的解压工具修订：`extraction-repair-20261016.1`。下载分段交付包后，先用外层 `Expand-CompletePackage.ps1` 解压到短目录；默认 `%USERPROFILE%\MCC2`，也可指定 `-DestinationPath 'D:\MCC2'`。旧脚本解压失败时先阅读外层 `REPAIR-EXTRACTION.zh-CN.md`；已生成的原始 ZIP 可直接校验复用。目标目录已存在时不得覆盖部署或数据，换新目录处理。外层修复不改变原始完整 ZIP、插件版本或原包 SHA256。
+
 ## 1. 目标、边界与完成标准
 
 目标是在全新 Windows Server 2019 x64 上，通过一个启动入口运行中继及网页，管理 1–10 台 MCC 终端。第一台为协调者，加载 bot-room、AutoResponder、ETPBot、TweakMCC；其它台加载 bot-room、ETPBot、TweakMCC。
@@ -82,7 +84,8 @@ MCC 是公开 Build 13 源码加本项目兼容补丁的构建，**不是官方�
 
 ```powershell
 Get-FileHash -LiteralPath 'D:\Downloads\mcc2-console-0.2.0-windows-server-2019-x64-complete-lock-service.zip' -Algorithm SHA256
-Expand-Archive -LiteralPath 'D:\Downloads\mcc2-console-0.2.0-windows-server-2019-x64-complete-lock-service.zip' -DestinationPath 'D:\MCC2'
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::ExtractToDirectory('D:\Downloads\mcc2-console-0.2.0-windows-server-2019-x64-complete-lock-service.zip', 'D:\MCC2')
 Set-Location 'D:\MCC2'
 Set-ExecutionPolicy -Scope Process Bypass -Force
 & .\tools\Test-Deployment.ps1
@@ -90,7 +93,9 @@ Set-ExecutionPolicy -Scope Process Bypass -Force
 
 必须使用系统 64 位 PowerShell（`C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe`）；从 32 位管理程序调用时使用 `Sysnative` 路径。预检验证 Windows Server Build >=17763、x64 进程、交付文件 SHA-256、私有运行时可执行及两种框架、MCC 兼容依赖版本。哈希校验失败时重新解压原包，不直接编辑 `bundle-manifest.json` 来让校验通过。
 
-部署文件可放在带空格或中文的目录。PS 文件以带 BOM 的 UTF-8 打包，适用于 PowerShell 5.1；TOML 是 UTF-8。不要把启动脚本保存为 ANSI。若系统策略要求额外签名或管理员批准，只处理具体被阻止的项目，不修改全局执行策略或关闭安全软件。
+若已用外层脚本完成解压，不要重复执行解压命令，直接在 `Ready:` 所指目录执行预检。发现旧解压不完整时，不要启动该目录中的程序或手动补单个文件，应从校验通过的原始 ZIP 解压到全新的短目录。
+
+部署文件可放在带空格或中文的短目录，但应避免双层 GitHub 长名称路径；用户报告的嵌套目录会使部分运行时文件路径达到 310 字符。优先 `D:\MCC2` 或 `C:\Users\Administrator\MCC2`。原始 ZIP 没有显式目录条目；使用 .NET ZIP 解压器，不依赖系统旧版 `Expand-Archive` 模块。PS 文件以带 BOM 的 UTF-8 打包，适用于 PowerShell 5.1；TOML 是 UTF-8。不要把启动脚本保存为 ANSI。若系统策略要求额外签名或管理员批准，只处理具体被阻止的项目，不修改全局执行策略或关闭安全软件。
 
 确认存在 Edge/Chrome；IE 无法运行本网页。若没有，在**管理员** PowerShell 执行：
 

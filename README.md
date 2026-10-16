@@ -4,12 +4,22 @@
 
 [下载完整交付 ZIP](https://github.com/Tarot268/Minecraft-Console-Client/archive/refs/heads/mcc2-console-downloads.zip)
 
+[已下载旧包：只下载解压修复补丁](https://github.com/Tarot268/Minecraft-Console-Client/raw/refs/heads/mcc2-console-downloads/mcc2-extraction-fix-20261016.zip)，无需重新下载五个分段。操作见 [解压故障修复](REPAIR-EXTRACTION.zh-CN.md)。
+
 ## Windows 使用步骤
 
 1. 下载上方 ZIP，并完整解压到一个新的目录。建议至少预留 1 GB 磁盘空间。
 2. 打开解压后的目录，双击 `Extract-Complete-Package.cmd`。不要在压缩包预览窗口内直接运行。
-3. 脚本会校验五个分段文件、还原原始完整 ZIP、核对原包 SHA256，并解压到 `mcc2-console-complete` 目录。脚本使用系统自带的 PowerShell，无需下载依赖。
-4. 阅读该目录中的 `AGENT-DEPLOYMENT-WINDOWS-SERVER-2019.zh-CN.md`，按部署指南完成配置，再运行 `start-console.cmd`。
+3. 脚本会校验五个分段文件、还原原始完整 ZIP、核对原包 SHA256，并默认解压到 `%USERPROFILE%\MCC2`，例如 `C:\Users\Administrator\MCC2`。原始 ZIP 已存在时会校验并复用，不会因之前解压失败而要求重新下载。脚本使用系统自带的 PowerShell 和 .NET，无需下载依赖。
+4. 以脚本最后显示的 `Ready:` 路径为准，打开对应目录，按 Agent 部署指南完成配置，再运行 `start-console.cmd`。默认目标目录已存在时会安全停止；如需新部署，请指定另一个短目录。
+
+如需指定目标位置，在本下载目录的 PowerShell 中执行：
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\Expand-CompletePackage.ps1 -DestinationPath 'C:\MCC2'
+```
+
+目标目录应不存在。不要在双层 GitHub 长名称目录下继续部署；脚本会提前检查最长输出路径，并使用短临时目录、.NET ZIP 解压器和完整性检查，避免依赖 Windows PowerShell 5.1 的 `Expand-Archive` 模块。无需修改注册表或全局执行策略。
 
 GitHub 对普通 Git 文件大小有限制，公开 fork 仓库还拒绝新增 LFS 对象，因此下载分支用五个分段保存原包。不要单独下载 `parts` 中的某一个文件；上方 ZIP 包含全部分段、校验数据和还原工具。
 
